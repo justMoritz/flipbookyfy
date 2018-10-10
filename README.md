@@ -23,7 +23,7 @@ Make a cool Flip-board style web-app.
 
 ### Sample Function Call
 
-  flipbookyfy.init({
+  `flipbookyfy.init({
     containerclass: '.blogmain',
     headerclass: '.entry-header',
     summaryclass: '.entry-summary',
@@ -33,7 +33,7 @@ Make a cool Flip-board style web-app.
       '.footer',
       '.header'
       ]
-  });
+  });`
   
 #### REQUIRED!!
   
