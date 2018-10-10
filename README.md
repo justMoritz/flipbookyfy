@@ -6,16 +6,16 @@ Make a cool Flip-board style web-app.
 
 ### Sample Markup:
 
-  `<div class="main">
-    <article>
-      <div class="header"></div>
-      <div class="summary"></div>
-    </article>
-    <article>
-      <div class="header"></div>
-      <div class="summary"></div>
-    </article>
-  <div>`
+  `<div class="main">`
+    `<article>`
+      `<div class="header"></div>`
+      `<div class="summary"></div>`
+    `</article>`
+    `<article>`
+      `<div class="header"></div>`
+      `<div class="summary"></div>`
+    `</article>`
+  `<div>`
     
 
 *ATTENTION!!!!!: The wrapper for (`<article>` in the example) will be removed by the script!*
