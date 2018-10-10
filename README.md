@@ -6,7 +6,7 @@ Make a cool Flip-board style web-app.
 
 ### Sample Markup:
 
-  <div class="main">
+  `<div class="main">
     <article>
       <div class="header"></div>
       <div class="summary"></div>
@@ -15,7 +15,7 @@ Make a cool Flip-board style web-app.
       <div class="header"></div>
       <div class="summary"></div>
     </article>
-  <div>
+  <div>`
     
 
 *ATTENTION!!!!!: The wrapper for (`<article>` in the example) will be removed by the script!*
