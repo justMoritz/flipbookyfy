@@ -5,17 +5,18 @@ Make a cool Flip-board style web-app.
 ## Usage: 
 
 ### Sample Markup:
-
-  `<div class="main">`
-    `<article>`
-      `<div class="header"></div>`
-      `<div class="summary"></div>`
-    `</article>`
-    `<article>`
-      `<div class="header"></div>`
-      `<div class="summary"></div>`
-    `</article>`
-  `<div>`
+```
+  <div class="main">
+    <article>
+      <div class="header"></div>
+      <div class="summary"></div>
+    </article>
+    <article>
+      <div class="header"></div>
+      <div class="summary"></div>
+    </article>
+  <div>
+```
     
 
 *ATTENTION!!!!!: The wrapper for (`<article>` in the example) will be removed by the script!*
@@ -23,7 +24,8 @@ Make a cool Flip-board style web-app.
 
 ### Sample Function Call
 
-  `flipbookyfy.init({
+```
+  flipbookyfy.init({
     containerclass: '.blogmain',
     headerclass: '.entry-header',
     summaryclass: '.entry-summary',
@@ -33,8 +35,9 @@ Make a cool Flip-board style web-app.
       '.footer',
       '.header'
       ]
-  });`
-  
+  });
+```
+
 #### REQUIRED!!
   
   * @param  {string} containerclass The class containing the items that should be flipped (.main in the example markup)
