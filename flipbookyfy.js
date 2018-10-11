@@ -109,11 +109,6 @@ var flipbookyfy = (function($){
       // windowheight = screen.availHeight*heightmodifier - excludedheight;
       // windowheight = window.innerHeight*heightmodifier - excludedheight;
 
-      console.log(  $(window).height() );
-      console.log( screen.availHeight );
-
-
-      // $('body').css('height', screen.availHeight+'px').css('overflow', 'hidden');
 
       $childelements = $(containerclass).children();
       childnumber   = $childelements.length;
@@ -158,7 +153,7 @@ var flipbookyfy = (function($){
 
       // loops through each item in the list and applies logical logic.
       for(var i=0; i<childnumber; i++){
-        var $prevHeader = $(headerclass); // every element is a previous element!
+        var $prevHeader = $(headerclass);
         var $prevSummary = $(summaryclass);
 
         var $curHeader = $(headerclass+'.elementnumber'+i);
@@ -190,6 +185,9 @@ var flipbookyfy = (function($){
         }
         // if element is no longer in view, and related logic.
         else{
+          // $prevHeader.removeClass('this--previtem');
+          // $prevSummary.removeClass('this--previtem');
+
           $curHeader.removeClass('this--isinview');
           $curSummary.removeClass('this--isinview');
 
