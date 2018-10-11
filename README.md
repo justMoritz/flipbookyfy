@@ -40,12 +40,12 @@ Make a cool Flip-board style web-app.
 
 #### REQUIRED!!
   
-  * @param  {string} containerclass The class containing the items that should be flipped (.main in the example markup)
-  * @param  {string} headerclass    The class of the top portion of the flipbook (.header) in the example
-  * @param  {string} summaryclass   The class of the bottom portion of the flipbook (.summary) in the example
+  * @param  {string} `containerclass` The class containing the items that should be flipped (.main in the example markup)
+  * @param  {string} `headerclass`    The class of the top portion of the flipbook (.header) in the example
+  * @param  {string} `summaryclass`   The class of the bottom portion of the flipbook (.summary) in the example
   
 #### (OPTIONAL) 
-  * @param  {string} heightmodifier EXPERIMENTAL!!!! If you want to slow down or speed up the scroll.
-  * @param  {array} excludeitems    An array of classnames (strings) you wish to exclude
+  * @param  {string} `heightmodifier` EXPERIMENTAL!!!! If you want to slow down or speed up the scroll.
+  * @param  {array}  `excludeitems`   An array of classnames (strings) you wish to exclude
   
   
