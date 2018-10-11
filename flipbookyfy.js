@@ -21,6 +21,7 @@ var flipbookyfy = (function($){
    * @param  {string} containerclass The class containing the items that should be flipped (.main in the example markup)
    * @param  {string} headerclass    The class of the top portion of the flipbook (.header) in the example
    * @param  {string} summaryclass   The class of the bottom portion of the flipbook (.summary) in the example
+   * @param  {array} excludeitems    An array of classnames (strings) you wish to exclude
    * @param  {string} heightmodifier EXPERIMENTAL!!!! If you want to slow down or speed up the scroll.
    *                                 For example: Pass 0.5 for twice the speed, 2 for half. Default is 1.
    */
@@ -74,6 +75,12 @@ var flipbookyfy = (function($){
           'width: 100%;'+
           'height: 50%;'+
         '}'+
+// next header current summary
+
+        containerclass +' '+ headerclass +  ':not(.this--nextitem), '+
+        containerclass +' '+ summaryclass + ':not(.this--isinview){ '+
+          'transform: rotateX(0deg) !important;' +
+        '}'+
         containerclass +' '+ headerclass+ '{' +
           'top: 0;'+
           'transform-origin: bottom center;'+
@@ -85,6 +92,7 @@ var flipbookyfy = (function($){
           'transform-origin: top center;' +
         '}'+
         '.this--isinview'+summaryclass+'{ z-index: 2000 !important;}' +
+        '.this--previtem'+summaryclass+'{ visibility: hidden; }' +
         '.this--isinview'+headerclass+'{ z-index: 2001 !important; }' +
         '.this--nextitem'+headerclass+'{ z-index: 2002 !important; }' +
         '.this--nextitem'+summaryclass+'{ transform: rotateX(0deg) !important; }' +
@@ -97,10 +105,15 @@ var flipbookyfy = (function($){
 
     var _prepDoc = function(){
 
-      // windowheight = $(window).height()*heightmodifier - excludedheight;
-      windowheight = screen.availHeight*heightmodifier - excludedheight;
+      windowheight = $(window).height()*heightmodifier - excludedheight;
+      // windowheight = screen.availHeight*heightmodifier - excludedheight;
       // windowheight = window.innerHeight*heightmodifier - excludedheight;
 
+      console.log(  $(window).height() );
+      console.log( screen.availHeight );
+
+
+      // $('body').css('height', screen.availHeight+'px').css('overflow', 'hidden');
 
       $childelements = $(containerclass).children();
       childnumber   = $childelements.length;
@@ -145,8 +158,8 @@ var flipbookyfy = (function($){
 
       // loops through each item in the list and applies logical logic.
       for(var i=0; i<childnumber; i++){
-        var $prevHeader = $(headerclass+'.elementnumber'+(i-1));
-        var $prevSummary = $(summaryclass+'.elementnumber'+(i-1));
+        var $prevHeader = $(headerclass); // every element is a previous element!
+        var $prevSummary = $(summaryclass);
 
         var $curHeader = $(headerclass+'.elementnumber'+i);
         var $curSummary = $(summaryclass+'.elementnumber'+i);
@@ -160,26 +173,23 @@ var flipbookyfy = (function($){
           $prevHeader.addClass('this--previtem');
           $prevSummary.addClass('this--previtem');
 
-          $curHeader.addClass('this--isinview');
-          $curSummary.addClass('this--isinview');
+          $curHeader.addClass('this--isinview').removeClass('this--previtem');
+          $curSummary.addClass('this--isinview').removeClass('this--previtem');
 
-          $nextHeader.addClass('this--nextitem');
-          $nextSummary.addClass('this--nextitem');
+          $nextHeader.addClass('this--nextitem').removeClass('this--previtem');
+          $nextSummary.addClass('this--nextitem').removeClass('this--previtem');
 
           if( degree >= 90 ){
             $nextHeader.css('transform', 'perspective('+perspective+') rotateX('+((degree-180))+'deg)');
-            $curSummary.css('transform', 'rotateX('+90+'deg)');
+            $curSummary.css('transform', 'perspective('+perspective+') rotateX('+90+'deg)');
           }else{
             $curSummary.css('transform', 'perspective('+perspective+') rotateX('+degree+'deg)');
-            $curHeader.css('transform', 'rotateX('+0+'deg)');
-            $nextHeader.css('transform', 'rotateX('+90+'deg)');
+            $curHeader.css('transform', 'perspective('+perspective+') rotateX('+0+'deg)');
+            $nextHeader.css('transform', 'perspective('+perspective+') rotateX('+90+'deg)');
           }
         }
         // if element is no longer in view, and related logic.
         else{
-          $prevHeader.removeClass('this--previtem');
-          $prevSummary.removeClass('this--previtem');
-
           $curHeader.removeClass('this--isinview');
           $curSummary.removeClass('this--isinview');
 
