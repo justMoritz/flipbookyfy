@@ -43,13 +43,28 @@ look for the first link in the header and use it for each entire flipcard applic
 
 #### REQUIRED!!
   
-  * @param  {string} `containerclass` The class containing the items that should be flipped (.main in the example markup)
-  * @param  {string} `headerclass`    The class of the top portion of the flipbook (.header) in the example
-  * @param  {string} `summaryclass`   The class of the bottom portion of the flipbook (.summary) in the example
+  * @param  {string} `containerclass`   The class containing the items that should be flipped (.main in the example markup)
+  * @param  {string} `headerclass`      The class of the top portion of the flipbook (.header) in the example
+  * @param  {string} `summaryclass`     The class of the bottom portion of the flipbook (.summary) in the example
   
 #### (OPTIONAL) 
-  * @param  {string} `heightmodifier` EXPERIMENTAL!!!! If you want to slow down or speed up the scroll.
-  * @param  {int}    `perspective`    Defauly is 0, Don't use px. The CSS perspective on the flipping cards.
-  * @param  {array}  `excludeitems`   An array of classnames (strings) you wish to exclude
+  *  @param  {string} `paginationclass` The class of the item your pagination might sit in. CAREFUL!!
+  *                                     This item MUST NOT sit in the container (the one with “containerclass”)
+  * @param  {string} `heightmodifier`   EXPERIMENTAL!!!! If you want to slow down or speed up the scroll.
+  * @param  {int}    `perspective`      Defauly is 0, Don't use px. The CSS perspective on the flipping cards.
+  * @param  {array}  `excludeitems`     An array of classnames (strings) you wish to exclude
   
   
+## Events
+
+If you are using Pagination at the end, the script offers two events that will fire when the pagination section either scrolls half way ot 3/4 ways past the screen.
+
+- `flipBookHalfEnd`
+- `flipBookThreeQuarterEnd`
+
+### Listen like this 
+```
+   $(document).on('flipBookThreeQuarterEnd', function(){
+      // do stuff and stuff
+   }
+```
