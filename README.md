@@ -48,8 +48,7 @@ look for the first link in the header and use it for each entire flipcard applic
   * @param  {string} `summaryclass`     The class of the bottom portion of the flipbook (.summary) in the example
   
 #### (OPTIONAL) 
-  *  @param  {string} `paginationclass` The class of the item your pagination might sit in. CAREFUL!!
-  *                                     This item MUST NOT sit in the container (the one with “containerclass”)
+  *  @param  {string} `paginationclass` The class of the item your pagination might sit in. CAREFUL!! This item MUST NOT sit in the container (the one with “containerclass”)
   * @param  {string} `heightmodifier`   EXPERIMENTAL!!!! If you want to slow down or speed up the scroll.
   * @param  {int}    `perspective`      Defauly is 0, Don't use px. The CSS perspective on the flipping cards.
   * @param  {array}  `excludeitems`     An array of classnames (strings) you wish to exclude
