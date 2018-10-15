@@ -4,7 +4,7 @@ Make a cool Flip-board style web-app.
 
 ## Usage: 
 
-### Sample Markup*:
+### Sample Markup:
 ```
    <div class="main">
      <article>
