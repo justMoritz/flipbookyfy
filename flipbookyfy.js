@@ -35,10 +35,12 @@ var flipbookyfy = (function($){
    *   @param  {string} summaryclass   The class of the bottom portion of the flipbook (.summary) in the example
    *
    *   OPTIONAL
-   *   @param  {array}  excludeitems   An array of classnames (strings) you wish to exclude
-   *   @param  {int}    perspective    Defauly is 0, Don't use px. The CSS perspective on the flipping cards.
-   *   @param  {string} heightmodifier EXPERIMENTAL!!!! If you want to slow down or speed up the scroll.
-   *                                   For example: Pass 0.5 for twice the speed, 2 for half. Default is 1.
+   *   @param  {string} paginationclass The class of the item your pagination might sit in. CAREFUL!!
+   *                                    This item MUST NOT sit in the container (the one with “containerclass”)
+   *   @param  {array}  excludeitems    An array of classnames (strings) you wish to exclude
+   *   @param  {int}    perspective     Defauly is 0, Don't use px. The CSS perspective on the flipping cards.
+   *   @param  {string} heightmodifier  EXPERIMENTAL!!!! If you want to slow down or speed up the scroll.
+   *                                    For example: Pass 0.5 for twice the speed, 2 for half. Default is 1.
    */
   var _flipbookyfy = function( input ){
 
@@ -48,7 +50,8 @@ var flipbookyfy = (function($){
         summaryclass,
         perspective,
         heightmodifier,
-        excludeitems;
+        excludeitems,
+        paginationclass;
 
     // parse object passed in function call
     for (var key in input){
@@ -59,6 +62,7 @@ var flipbookyfy = (function($){
         if( key === 'perspective'){ perspective = input[key]; }
         if( key === 'heightmodifier'){ heightmodifier = input[key]; }
         if( key === 'excludeitems'){ excludeitems = input[key]; }
+        if( key === 'paginationclass'){ paginationclass = input[key]; }
       }
     }
 
@@ -77,8 +81,9 @@ var flipbookyfy = (function($){
       throw "You did not set all required parameters";
     }
     // defaults
-    heightmodifier = heightmodifier || 1;
-    perspective = perspective || '0';
+    heightmodifier  = heightmodifier  ||  1;
+    perspective     = perspective     || '0';
+    paginationclass = paginationclass || false;
 
     // prepares neccesary classes and styles for the flipbook
     var headstyles =
@@ -115,7 +120,7 @@ var flipbookyfy = (function($){
           'position: relative; ' +
           'width: 100%; ' +
           'z-index: 4998;' +
-          'opacity: 0.7; ' +
+          'opacity: 0; ' +
           // For any overlays over the flipbook application, use the same kinda logic
           // in your other CSS as follows (needed for safari browsers):
           // Since your flipping elements will live in a perspective state, you will need ANYTHING
@@ -132,6 +137,17 @@ var flipbookyfy = (function($){
     var windowheight;
     var $childelements;
     var childnumber;
+    var paginationclassHeight = 0;
+    var paginationmarkup = '';
+
+    if(paginationclass){
+      // paginationclassHeight = $(paginationclass).outerHeight(true);
+      // used to take up the height of additional flip card at the end of the list later
+      paginationclassHeight = 1;
+      // saves the pagination markup
+      paginationmarkup = $(paginationclass).html();
+    }
+
 
     var _prepDoc = function(){
 
@@ -143,11 +159,19 @@ var flipbookyfy = (function($){
       $childelements = $(containerclass).children();
       childnumber   = $childelements.length;
 
+      var lastNumberedZIndex = 0;
       // applies reverse order z-indices.
       for(var h=0; h<childnumber; h++){
         var $curset = $($childelements[h]);
         $curset.children().addClass('elementnumber'+h).css('zIndex', (childnumber-h)*100 );
+        lastNumberedZIndex = childnumber-h;
       }
+      // adds the last z-index to the item.
+      lastNumberedZIndex--;
+      if(paginationclass){
+        $(paginationclass).css('zIndex', (lastNumberedZIndex)*100 );
+      }
+
 
       // removes wrapper ('article')
       $childelements.find(headerclass, containerclass).unwrap();
@@ -157,7 +181,7 @@ var flipbookyfy = (function($){
       // that would be scrolled if all the elements were to
       // render in a row in stead of on top of each other.
       $(containerclass).children().css('height', windowheight/(2*heightmodifier)+'px');
-      $(containerclass).css('height', windowheight*childnumber +'px').css('overflow', 'hidden');
+      $(containerclass).css('height', (windowheight*(childnumber+paginationclassHeight))-1 +'px').css('overflow', 'hidden');
 
       // offsets the second element at the correct height
       $(containerclass).find(summaryclass).css('top', windowheight/(2*heightmodifier)+'px');
@@ -195,11 +219,20 @@ var flipbookyfy = (function($){
           }
           $(containerclass).append(startMarkup + ' class="filpbookscrollplaceholder" style="height:' + windowheight + 'px"></' + endMarkup);
         }
+        // if pagination exists, adds another half height element,
+        // so you can back if need be. It will also add the pagination markup
+        // into that element, if that's something you want to style.
+        if(paginationclassHeight){
+          $(containerclass).append('<div class="filpbookscrollplaceholder this--lastitemscroller" style="height:' + windowheight/2 + 'px">'+paginationmarkup+'</div>');
+        }
       }else{
         for(var b=0; b<childnumber; b++){
           var $allScrollPlaceholders = $('.filpbookscrollplaceholder');
           var $curScrollPlaceholder  = $($allScrollPlaceholders[b]);
           $curScrollPlaceholder.css('height', windowheight + 'px');
+        }
+        if(paginationclassHeight){
+          $('.filpbookscrollplaceholder.this--lastitemscroller').css('height', windowheight/2 + 'px');
         }
       }
     };
@@ -215,6 +248,24 @@ var flipbookyfy = (function($){
 
       var wnps = $('.flipbookwrapper').scrollTop();
       wnps = wnps/heightmodifier;
+
+      // console.log(wnps);
+      // console.log( windowheight*(childnumber-1) );
+
+      // if scrolled half a card height past the last card height, trigger half event
+      if( wnps > windowheight*(childnumber-paginationclassHeight/2) ){
+        $(document).trigger('flipBookHalfEnd');
+      }
+      if(wnps > windowheight*(childnumber-paginationclassHeight/2.5) ){
+        $(document).trigger('flipBookThreeQuarterEnd');
+      }
+
+      // if scrolled half a card height past the last card height
+      if( wnps > windowheight*(childnumber-paginationclassHeight) ){
+        $(paginationclass).addClass('this--paginationisinview');
+      }else{
+        $(paginationclass).removeClass('this--paginationisinview');
+      }
 
       // resets every time the height of one element has been scrolled
       var scrollratio = wnps % windowheight;
