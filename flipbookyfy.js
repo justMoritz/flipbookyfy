@@ -159,6 +159,8 @@ var flipbookyfy = (function($){
       $childelements = $(containerclass).children();
       childnumber   = $childelements.length;
 
+      console.log( childnumber );
+
       var lastNumberedZIndex = 0;
       // applies reverse order z-indices.
       for(var h=0; h<childnumber; h++){
@@ -194,6 +196,8 @@ var flipbookyfy = (function($){
         $('.flipbookwrapper').css('height', windowheight+'px');
       }
 
+      $(document).trigger('flipBookPrepDocFinish');
+
     };
 
     /**
@@ -205,6 +209,7 @@ var flipbookyfy = (function($){
      * It will adjust the height of the element accordingly
      */
     var _initDocOnly = function(){
+      // console.log( '_initDocOnly' );
       if( !$('.filpbookscrollplaceholder').length ){
         for(var i=0; i<childnumber; i++){
           var $allHeaders = $(headerclass) ;
@@ -235,6 +240,7 @@ var flipbookyfy = (function($){
           $('.filpbookscrollplaceholder.this--lastitemscroller').css('height', windowheight/2 + 'px');
         }
       }
+
     };
 
     _prepDoc();
@@ -248,9 +254,6 @@ var flipbookyfy = (function($){
 
       var wnps = $('.flipbookwrapper').scrollTop();
       wnps = wnps/heightmodifier;
-
-      // console.log(wnps);
-      // console.log( windowheight*(childnumber-1) );
 
       // if scrolled half a card height past the last card height, trigger half event
       if( wnps > windowheight*(childnumber-paginationclassHeight/2) ){
@@ -321,16 +324,17 @@ var flipbookyfy = (function($){
     });
   };
 
-
+  // Makes sure init only happens one time
+  var initted = false;
   var init = function(input){
-
-    _flipbookyfy(input);
-
-    // hack needed in order to start drawing
-    // all the elements correctly after load
-    window.scrollBy(0, 1);
-    window.scrollBy(0, -1);
-
+    if(!initted){
+      _flipbookyfy(input);
+      // hack needed in order to start drawing
+      // all the elements correctly after load
+      window.scrollBy(0, 1);
+      window.scrollBy(0, -1);
+    }
+    initted = true;
   };
 
 
