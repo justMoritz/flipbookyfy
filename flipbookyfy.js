@@ -146,6 +146,7 @@ var flipbookyfy = (function($){
       paginationclassHeight = 1;
       // saves the pagination markup
       paginationmarkup = $(paginationclass).html();
+      $(paginationclass).remove();
     }
 
 
@@ -227,7 +228,7 @@ var flipbookyfy = (function($){
         // if pagination exists, adds another half height element,
         // so you can back if need be. It will also add the pagination markup
         // into that element, if that's something you want to style.
-        if(paginationclassHeight){
+        if(paginationclassHeight && paginationmarkup){
           $(containerclass).append('<div class="filpbookscrollplaceholder this--lastitemscroller" style="height:' + windowheight/2 + 'px">'+paginationmarkup+'</div>');
         }
       }else{
