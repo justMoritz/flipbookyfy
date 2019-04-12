@@ -160,8 +160,6 @@ var flipbookyfy = (function($){
       $childelements = $(containerclass).children();
       childnumber   = $childelements.length;
 
-      console.log( childnumber );
-
       var lastNumberedZIndex = 0;
       // applies reverse order z-indices.
       for(var h=0; h<childnumber; h++){
@@ -210,7 +208,7 @@ var flipbookyfy = (function($){
      * It will adjust the height of the element accordingly
      */
     var _initDocOnly = function(){
-      // console.log( '_initDocOnly' );
+
       if( !$('.filpbookscrollplaceholder').length ){
         for(var i=0; i<childnumber; i++){
           var $allHeaders = $(headerclass) ;
