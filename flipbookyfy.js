@@ -219,7 +219,7 @@ var flipbookyfy = (function($){
           var startMarkup = '<div ';
           var endMarkup   = 'div>';
 
-          if(currentLink.length){
+          if(currentLink !== undefined && currentLink.length){
             startMarkup = '<a href="'+currentLink+'" ';
             endMarkup   = 'a>';
           }
