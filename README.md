@@ -35,7 +35,7 @@ look for the first link in the header and use it for each entire flipcard applic
     containerclass: '.blogmain',
     headerclass: '.entry-header',
     summaryclass: '.entry-summary',
-    perspective: '1000px',
+    perspective: 1000,
     heightmodifier: 1,
     excludeitems: [
       '.footer',
