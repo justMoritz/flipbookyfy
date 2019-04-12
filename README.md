@@ -70,3 +70,7 @@ If you are using Pagination at the end, the script offers two events that will f
       // do stuff and stuff
    }
 ```
+
+## Example
+
+A (**very, very basic and limited**) demo can be found here https://codepen.io/justMoritz/full/vMJOZv
