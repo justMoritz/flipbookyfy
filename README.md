@@ -1,7 +1,7 @@
 # flipbookyfy
 Make a cool Flip-board style web-app.
 
-![sample image](https://raw.githubusercontent.com/justMoritz/flipbookyfy/master/sample.gif)
+![sample image](https://raw.githubusercontent.com/justMoritz/images/master/flipbookify.gif)
 
 
 
