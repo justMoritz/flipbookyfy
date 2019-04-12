@@ -22,7 +22,7 @@ Make a cool Flip-board style web-app.
    <div>
 ```
 
-*ATTENTION!!!!!: The wrapper for (`<article>` in the example) will be removed by the script!*
+*ATTENTION!!!!!: The wrapper for (`<article>` in the example) will be **removed** by the script!*
 *Make sure you don't rely on them in your CSS.*
 
 If your markup has any links in it, make sure they are in the header portion. The script will
@@ -32,9 +32,9 @@ look for the first link in the header and use it for each entire flipcard applic
 
 ```
   flipbookyfy.init({
-    containerclass: '.blogmain',
-    headerclass: '.entry-header',
-    summaryclass: '.entry-summary',
+    containerclass: '.main',
+    headerclass: '.header',
+    summaryclass: '.summary',
     perspective: 1000,
     heightmodifier: 1,
     excludeitems: [
@@ -53,7 +53,7 @@ look for the first link in the header and use it for each entire flipcard applic
 #### (OPTIONAL)
   *  @param  {string} `paginationclass` The class of the item your pagination might sit in. CAREFUL!! This item MUST NOT sit in the container (the one with “containerclass”)
   * @param  {string} `heightmodifier`   EXPERIMENTAL!!!! If you want to slow down or speed up the scroll.
-  * @param  {int}    `perspective`      Defauly is 0, Don't use px. The CSS perspective on the flipping cards.
+  * @param  {int}    `perspective`      Defauly is 0, _Don't use px_. The CSS perspective on the flipping cards.
   * @param  {array}  `excludeitems`     An array of classnames (strings) you wish to exclude
 
 
